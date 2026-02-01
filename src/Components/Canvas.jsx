@@ -1,49 +1,44 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useRef,useState } from 'react'
 import canvasImage from '../utils/canvasimage.js'
+import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 
+
 function Canvas() {
-    useEffect(() => {
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const images = canvasImage.slice(0, 150);
-        const frames = [];
-        
-        const loadPromises = images.map(url => {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.onload = () => resolve(img);
-                img.src = url;
-            });
-        });
-        
-        Promise.all(loadPromises).then(loadedFrames => {
-            frames.push(...loadedFrames);
-            
-            let currentFrame = 0;
-            
-            function drawFrame() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(frames[currentFrame], 0, 0, canvas.width, canvas.height);
+
+    const [index,setIndex]=useState({value:0})
+    const canvaRef=useRef(null)
+
+
+    useGSAP(()=>{
+        gsap.to(index,{
+            value:148,
+            duration:3,
+            repeat:-1,
+            ease:"linear",
+            onUpdate:()=>{
+                // console.log(index)
+                setIndex({value:Math.round(index.value)})
             }
-            
-            gsap.to({frame: 0}, {
-                frame: 149,
-                duration: 5, // Duration for one cycle in seconds
-                ease: "none",
-                onUpdate: function() {
-                    currentFrame = Math.floor(this.targets()[0].frame);
-                    drawFrame();
-                },
-                repeat: -1,
-                yoyo: true
-            });
-        });
-    }, [])
-    
+        })
+    }),
+
+    useEffect(() => {
+        const canvas=canvaRef.current;
+        const ctx = canvas.getContext("2d");
+        const img = new Image()
+        img.src=canvasImage[index.value]
+        img.onload=()=>{
+            canvas.width=img.width
+            canvas.height=img.height
+            ctx.drawImage(img,0,0);
+         }
+        // console.log(canvasImage)
+    }, [index])
+
     return (
         <>
-        <canvas id='canvas' width="512" height="512">
+        <canvas id='canvas' className='size-72' ref={canvaRef}>
             Canvas
         </canvas>
         {/* <h1>Lorasda</h1> */}
