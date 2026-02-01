@@ -6,13 +6,13 @@ import gsap from 'gsap'
 
 function Canvas() {
 
-    const [index,setIndex]=useState({value:0})
+    const [index,setIndex]=useState({value:150})
     const canvaRef=useRef(null)
 
 
     useGSAP(()=>{
         gsap.to(index,{
-            value:148,
+            value:299,
             duration:3,
             repeat:-1,
             ease:"linear",
