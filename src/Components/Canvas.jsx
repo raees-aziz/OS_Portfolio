@@ -4,15 +4,15 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 
 
-function Canvas() {
+function Canvas({startPoint}) {
 
-    const [index,setIndex]=useState({value:150})
+    const [index,setIndex]=useState({value:startPoint})
     const canvaRef=useRef(null)
 
 
     useGSAP(()=>{
         gsap.to(index,{
-            value:299,
+            value:startPoint +149,
             duration:3,
             repeat:-1,
             ease:"linear",
