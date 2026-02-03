@@ -4,8 +4,8 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 
 
-function Canvas({startPoint}) {
-
+function Canvas({details}) {
+const {startIndex,numImages,duration,size,top,left,zInsex}=details
     const [index,setIndex]=useState({value:startPoint})
     const canvaRef=useRef(null)
 
@@ -38,7 +38,7 @@ function Canvas({startPoint}) {
 
     return (
         <>
-        <canvas id='canvas' className='size-72' ref={canvaRef}>
+        <canvas id='canvas' className={`size-${size}`} ref={canvaRef}>
             Canvas
         </canvas>
         {/* <h1>Lorasda</h1> */}
