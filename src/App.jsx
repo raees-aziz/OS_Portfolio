@@ -11,7 +11,7 @@ function App() {
           })}
         </div>
       })}
-      <h1>Rajdaj</h1>
+      <h1></h1>
     </div>
   )
 }
